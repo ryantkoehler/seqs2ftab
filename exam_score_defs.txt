@@ -1,0 +1,30 @@
+# Example score (feature) definitions
+# 9/18/18 RTK
+# 
+# Lines starting with '#' and blank lines are ignored.
+
+# Length
+dna_util,-ostat 2=seqlen
+
+# Content, runs
+# conF
+# Full seq content of single-base and single-degen-base
+alphcont,-btab 2=con_A_f 3=con_C_f 4=con_G_f 5=con_T_f 6=con_S_f 7=con_W_f 8=con_R_f 9=con_Y_f
+
+# rowF
+# Full seq runs of single-base and single-degen-base
+alphcont,-rtab 2=row_A_f 3=row_C_f 4=row_G_f 5=row_T_f 6=row_1_f 7=row_S_f 8=row_W_f 9=row_R_f 10=row_Y_f 13=row_2_f
+
+# Themo
+# Thermodynamic values for full-length, ends
+tm_util,-con,1e-7,-sal,0.2,-tmpey,-the  2=tmPey0_f 3=dGPey0_f 4=dHPey0_f 5=dSPey0_f
+#
+# Fraction bound at 60C
+tm_util,-con,1e-7,-sal,0.2,-tmpey,-fds,-temp,60 3=fBPey60_f
+
+# Secondary structure
+# Vienna / venpipe energy and hyb-base-count stats
+#
+# Pyret params @ 50C
+venpipe,-pfe,-dmb,-temp,50	2=venVen50mdG_f 3=venVen50pdG_f 5=venVen50mHy_f 6=venVen50mOp_f 7=venVen50pHyS_f 8=venVen50pHyW_f 9=venVen50pOp_f 10=venVen50pHyT_f
+
