@@ -9,7 +9,7 @@ Overview
 
 The script seqs2ftab.py is used, in conjunction with "score definition" 
 and sequence files, to generate sequence feature tables suitable for data
-analysis.
+analysis and machine learning.
 
 
 ----------------------------------------------------------------------------
