@@ -38,7 +38,7 @@ Here is an example score definition line:
 
     tm_util,-con,1e-7,-sal,0.2,-tmpey,-the  2=tmPey0_f 3=dGPey0_f 4=dHPey0_f 5=dSPey0_f
 
-In this case, the script will call the program tm_util to get thermodynamic
+In this case, the script will call the program *tm_util* to get thermodynamic
 features. The command line specification and corresponding command line are
 as follows (using 'rand_seqs.dna' as the sequence filename):
 
@@ -54,6 +54,13 @@ There are four features indicated in the score definition line; From col 2
 we will get sequence melting temperature, Tm (named as 'tmPey0_f'), and from
 columns 3,4,5 we will get free energy ('dGPey0_f'), enthalpy ('dHPey0_f'), 
 and entropy (dSPey0_f).
+
+
+NOTE: *tm_util* as well as other programs listed in the example score 
+definition file (*dna_util*, *alphcont*, *venpipe*) are all part of the 
+vertools collection; Source code is available here:
+
+    https://github.com/ryantkoehler/vertools
 
 
 ----------------------------------------------------------------------------
