@@ -7,7 +7,7 @@
 #   calculate various features, then build a feature table with all the 
 #   calculated values for each sequence. 
 # 
-# 912/15/17 V0.1 RTK
+# 12/15/17 V0.1 RTK
 # 
 import argparse
 import re
@@ -320,14 +320,7 @@ class ComCall:
 
 
 
-
-
-
-#s2f = Seqs2ftab(SDFFILE, sd_fmt='txt')
-
-
-#y = s2f.process_df(SEQFILE)
-
+# Called directly
 if __name__ == "__main__":
     main()
 

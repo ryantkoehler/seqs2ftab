@@ -5,7 +5,7 @@ seqs2ftab
 
 9/18/18 RTK V0.1
 
-Overview
+**Overview**
 
 The script seqs2ftab.py is used, in conjunction with "score definition" 
 and sequence files, to generate sequence feature tables suitable for data
@@ -13,7 +13,7 @@ analysis and machine learning.
 
 
 ----------------------------------------------------------------------------
-Dependencies
+**Dependencies**
 
 The script requires pandas.
 
@@ -21,7 +21,7 @@ It also requires a utility function in (included) 'rtk_io.py'
 
 
 ----------------------------------------------------------------------------
-Background
+**Background**
 
 The code parses the score definition file, then issues command line calls
 for each definition line and parses output(s) into a table. Each score 
@@ -55,8 +55,12 @@ we will get sequence melting temperature, Tm (named as 'tmPey0_f'), and from
 columns 3,4,5 we will get free energy ('dGPey0_f'), enthalpy ('dHPey0_f'), 
 and entropy (dSPey0_f).
 
+**NOTE1**: The output of called programs must have one line per input 
+sequence. Blank lines and lines starting with "#" are ignored. Otherwise,
+each input sequence should have a corresponding output line with values to
+be extracted and compiled into score tables. 
 
-NOTE: *tm_util* as well as other programs listed in the example score 
+**NOTE2**: *tm_util* as well as other programs listed in the example score 
 definition file (*dna_util*, *alphcont*, *venpipe*) are all part of the 
 vertools collection; Source code is available here:
 
@@ -74,5 +78,5 @@ usage instructions.
 The following command line generates a table of features for the given 
 sequences; The output table has 32 features for 1000 sequences.
 
-    ./seqs2ftab.py -d exam_score_defs.txt -s rand_seqs.dna -o rand_seqs.sco 
+    ./seqs2ftab.py -s rand_seqs.dna -d exam_score_defs.txt -o rand_seqs.sco
 
