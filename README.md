@@ -42,8 +42,10 @@ In this case, the script will call the program *tm_util* to get thermodynamic
 features. The command line specification and corresponding command line are
 as follows (using 'rand_seqs.dna' as the sequence filename):
 
+    # Score definition line; i.e. in score definition file 
     tm_util,-con,1e-7,-sal,0.2,-tmpey,-the
 
+    # Actual command line; i.e. issued by script
     tm_util -con 1e-7 -sal 0.2 -tmpey -the rand_seqs.dna
 
 The command line options -con and -sal set concentration and salt (to 1e-7 
