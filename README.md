@@ -48,9 +48,13 @@ as follows (using 'rand_seqs.dna' as the sequence filename):
     # Actual command line; i.e. issued by script
     tm_util -con 1e-7 -sal 0.2 -tmpey -the rand_seqs.dna
 
-The command line options -con and -sal set concentration and salt (to 1e-7 
-and 0.2 M, respectively). The -tmpey and -the options specify the Peyret 
-thermodynamics algorithm and to output thermodynamic values, respectively.
+For this specific example, the command line options -con and -sal set DNA
+and salt concentrations (to 1e-7 and 0.2 M, respectively); See Note2 regarding
+the *tm_util* program used in this example. The -tmpey and -the options 
+specify to use the Peyret thermodynamics algorithm, and to output all 
+thermodynamic values. Output is dictated by the called command line code. 
+In this case, we get melting temperature, Tm; free energy, dG; standard 
+enthalpy, dH; and standard entropy, dS, terms, respectively.
 
 There are four features indicated in the score definition line; From col 2
 we will get sequence melting temperature, Tm (named as 'tmPey0_f'), and from
