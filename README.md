@@ -75,15 +75,14 @@ vertools collection; Source code is available here:
 
 
 ----------------------------------------------------------------------------
-Usage
+**Usage**
 
 The script requires a score definition file and a sequence file.
 
 Calling the script with --help will list options and (currently minimal!)
 usage instructions.
 
-The following command line generates a table of features for the given 
-sequences; The output table has 32 features for 1000 sequences.
+The following command line generates a table of features for sequences in the example 'rand_seqs.dna' file, using scores defined in the 'exam_score_defs.txt' file. In this example, the script 'exam_dna_prog.py' (included in this archive) is called; The output table has 10 features for 1000 sequences.
 
     ./seqs2ftab.py -s rand_seqs.dna -d exam_score_defs.txt -o rand_seqs.sco
 
