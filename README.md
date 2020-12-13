@@ -4,6 +4,7 @@ seqs2ftab
 ### Sequence to Feature Table tool
 
 9/18/18 RTK V0.1
+2020-12-12 RTK V0.12. Minor updates.
 
 **Overview**
 
@@ -16,8 +17,6 @@ analysis and machine learning.
 **Dependencies**
 
 The script requires pandas.
-
-It also requires a utility function in (included) 'rtk_io.py'
 
 
 ----------------------------------------------------------------------------
@@ -84,5 +83,5 @@ usage instructions.
 
 The following command line generates a table of features for sequences in the example 'rand_seqs.dna' file, using scores defined in the 'exam_score_defs.txt' file. In this example, the script 'exam_dna_prog.py' (included in this archive) is called; The output table has 10 features for 1000 sequences.
 
-    ./seqs2ftab.py -s rand_seqs.dna -d exam_score_defs.txt -o rand_seqs.sco
+    ./seqs2ftab.py -s rand_seqs.dna -c exam_score_defs.txt -o rand_seqs.sco
 

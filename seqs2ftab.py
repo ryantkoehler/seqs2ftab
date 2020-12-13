@@ -8,18 +8,18 @@
 #   calculated values for each sequence. 
 # 
 # 12/15/17 V0.1 RTK
+# 2020-12-12 V0.12 RTK 
 # 
 import argparse
+import subprocess
 import re
 import sys
 import time
 import pandas as pd
 from pandas import DataFrame
 
-from rtk_io import call_exec_lines
 
-
-__version__ = "V0.1; RTK 12/15/17"
+__version__ = "V0.12; RTK 2020-12-12"
 
 
 BARLINE = '=' * 75
@@ -29,23 +29,34 @@ def explain_story():
     print(BARLINE)
     print(__version__)
     print(BARLINE)
-    print("Parses command line definitions feature table")
-    print()
+    story="""
+Parses command line definition file, calls commands with sequences as
+inputs, collects outputs and builds a sequence feature table.")
+
+Requires that command line functions generate single line outputs per
+input sequence, starting with sequence name and followed by one or more
+data fields. Any non-data lines should start with a comment '#'.
+
+Sequences should be in raw format, each line: <name> <seq>
+"""
+    print(story)
 
 
 def main():
     parser = argparse.ArgumentParser(description='Sequences to feature table')
-    parser.add_argument("-d", "--dfile",
+    parser.add_argument("-c", "--cfile",
         help="Score definition (command line spec) filename\n"),
     parser.add_argument("-s", "--seqfile",
-        help="Sequence file name")
+        help="Sequence file name (raw format: <name> <seq> per line)")
     parser.add_argument("-o", "--outfile",
         help="Output file name")
-    parser.add_argument("-c", "--outcsv", action='store_true',
+    parser.add_argument("--outcsv", action='store_true', 
         help="Output csv; i.e. values,separated,by,commas; Default is tabs")
-    parser.add_argument("-u", "--dump", action='store_true',
+    parser.add_argument("--dump", action='store_true', 
         help="Dump summary of score defs")
-    parser.add_argument("-e", "--explain",
+    parser.add_argument("--dryrun", action='store_true', 
+        help="Only check inputs; Don't actually call commands")
+    parser.add_argument("-e", "--explain", action='store_true',
         help="Print some info explaining use")
 
     args = parser.parse_args()
@@ -53,12 +64,12 @@ def main():
         explain_story()
         return
 
-    if not args.dfile:
-        print("No score definition file ... nothing to do!")
+    if not args.cfile:
+        print("No score definition file ... nothing more to do")
         return
 
     # Load definitions
-    s2f = Seqs2ftab(args.dfile)
+    s2f = Seqs2ftab(args.cfile)
     if not s2f:
         print("Sorry, problem loading score defs")
         return
@@ -72,12 +83,15 @@ def main():
         print("No sequence file ... nothing more to do!")
         return
 
+    if args.dryrun:
+        return
+
     # Process sequences
     df = s2f.process_df(args.seqfile)
     if df is None:
         print("Sorry, problem getting feature table (DataFrame)")
         return
-    print("Got feature table: {0}".format(df.shape))
+    print(f"# Got feature table: {df.shape}")
 
     # Set output 
     if args.outfile:
@@ -100,7 +114,6 @@ def main():
     if OFILE is not sys.stdout:
         OFILE.close()
         print("New file: {0}".format(args.outfile))
-
 
 
 class Seqs2ftab:
@@ -289,7 +302,7 @@ class ComCall:
         comargs = self.comcall + ' ' + seqfile
         # Get list of output lines for call; 
         # shell=True means shell gets spawned (e.g. so env vars good)
-        out = call_exec_lines(comargs, shell=True, verb=verb)
+        out = call_exec(comargs, shell=True, verb=verb)
         # False if problem (None)
         if out is None:
             return False
@@ -319,8 +332,51 @@ class ComCall:
         return True
 
 
+# ---------------------------------------------------------------------------
+# Utility functions
+def call_exec(com_args, shell=True, verb=False, vpref='# Call:', strip_com=True, strip_blank=True):
+    """
+    Call executable via command line.
+        com_args = command line given as string or list; If list join as strings
+        shell = flag to call with shell (so env vars good, etc)
+        verb = verbosity flag; If true, print before call
+        vpref = prefix string for verbose prints; '' for none
 
-# Called directly
+    Returns output split into list of lines
+    """
+    if type(com_args) is list:
+        com_args = ' '.join([str(x) for x in com_args])
+
+    if not isinstance(com_args, str):
+        raise Exception("com_args not string or list.\ntype: %s\n" % type(com_args))
+
+    if verb:
+        if vpref is None:
+            print(com_args)
+        else:
+            print(vpref, com_args)
+
+    try:
+        # universal_newlines=True makes output (and input?) have newline rather than '\n'
+        # shell=True means spawn shell
+        callout = subprocess.check_output(com_args, universal_newlines=True, shell=shell)
+    except Exception as e:
+        print("Subprocess failed: %s" % (str(e)))
+        return None
+
+    # Split into list of lines then clean / filter this
+    callout = callout.splitlines()
+
+    if callout and strip_com:
+        callout = [x for x in callout if (x and not x.startswith('#'))]
+    if callout and strip_blank:
+        callout = [x for x in callout if (x and not x.isspace())]
+
+    return callout
+
+
+# ---------------------------------------------------------------------------
+# Top level
 if __name__ == "__main__":
     main()
 

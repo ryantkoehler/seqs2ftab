@@ -1,0 +1,10 @@
+2020-12-12 RTK
+
+v0.1.2
+
+Here are some things that could be done to improve.
+
+Add ability to parse fasta files (rather than just raw).
+
+Dump / report command line details better (e.g. for documenting).
+

@@ -1,4 +1,4 @@
-9/18/18 RTK 
+2020-12-12 RTK 
 List of files for seqs2ftab
 
 LICENSE.md
@@ -6,7 +6,6 @@ MANIFEST
 README.md
 
 seqs2ftab.py
-rtk_io.py
 
 rand_seqs.dna
 exam_score_defs.txt
